@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from shop.models import Product
 from cart.models import Cart,Account,Order
 from django.contrib.auth.decorators import login_required
@@ -12,24 +12,46 @@ def cartview(request):
     for i in cart:
         total+=i.quantity*i.product.price
     return render(request, 'cart.html',{'c':cart,'total':total})
+# @login_required
+# def addtocart(request,n):
+#     p=Product.objects.get(name=n)
+#     u=request.user
+#     try:
+#         cart=Cart.objects.get(user=u,product=p)
+#         if(p.stock > 0):
+#             cart.quantity+=1
+#             cart.save()
+#             p.stock -= 1
+#             p.save()
+#     except:
+#         if(p.stock>0):
+#             cart= Cart.objects.create(product=p,user=u,quantity=1)
+#             cart.save()
+#             p.stock-=1
+#             p.save()
+#     return cartview(request)
+
 @login_required
-def addtocart(request,n):
-    p=Product.objects.get(name=n)
-    u=request.user
+# Create your views here.
+def addtocart(request, n):
+    p = Product.objects.get(name=n)
+    u = request.user
     try:
-        cart=Cart.objects.get(user=u,product=p)
-        if(p.stock > 0):
-            cart.quantity+=1
+        cart = Cart.objects.get(user=u, product=p)
+        if (p.stock > 0):
+            cart.quantity += 1
             cart.save()
             p.stock -= 1
             p.save()
+
     except:
-        if(p.stock>0):
-            cart= Cart.objects.create(product=p,user=u,quantity=1)
+        if (p.stock > 0):
+            cart = Cart.objects.create(product=p, user=u, quantity=1)
             cart.save()
             p.stock-=1
             p.save()
-    return cartview(request)
+
+    return redirect('cart:cartview')
 @login_required
 def cart_remove(request,n):
     p=Product.objects.get(name=n)

@@ -3,7 +3,7 @@
 {% load static %}
 {% block content %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row fs-5 text-center">
         <h4 class="text-center">Shopping Cart</h4>
         <div class="col-6">
             <table class="table table-bordered">
@@ -18,11 +18,11 @@
                 <td>
                     {% if i.quantity < i.product.stock %}
                     <a href="{% url 'cart:cart' i.product.name %}"><i class="fa-solid fa-circle-plus"></i></a>
-                <a href="{% url 'cart:cart_remove' i.product.name %}"><i class="fa-solid fa-circle-minus"></i></a>
-                <a href="{% url 'cart:full_remove' i.product.name %}"><i class="fa-solid fa-trash"></i></a>
+                    <a href="{% url 'cart:cart_remove' i.product.name %}"><i class="fa-solid fa-circle-minus"></i></a>
+                    <a href="{% url 'cart:full_remove' i.product.name %}"><i class="fa-solid fa-trash"></i></a>
                     {% else %}
                     <a href="{% url 'cart:cart_remove' i.product.name %}"><i class="fa-solid fa-circle-minus"></i></a>
-                <a href="{% url 'cart:full_remove' i.product.name %}"><i class="fa-solid fa-trash"></i></a>
+                    <a href="{% url 'cart:full_remove' i.product.name %}"><i class="fa-solid fa-trash"></i></a>
                     {% endif %}
                 </td>
                 </tr>
